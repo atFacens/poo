@@ -1,31 +1,25 @@
 package br.facens;
 
-
-import java.sql.Connection;
-import java.sql.DriverManager;
-import java.sql.Statement;
+import br.facens.dao.ClienteDAO;
+import br.facens.model.Cliente;
 
 public class Main {
     public static void main(String[] args) {
 
-        String url = "jdbc:mysql://localhost:3306/bd_poo_facens";
-        String user = "profFacens";
-        String password = "aula";
+        // Cliente cliente1 = new Cliente(1, "Tiago", "tiago@email.com");
 
-        try {
-            System.out.println("Conectando ao BD...");
-            Connection connection = DriverManager.getConnection(url, user, password);
+        // ClienteDAO.inserirCliente(cliente1);
 
-            System.out.println("Criando a tabela...");
-            String sql = "create table tb_cliente(id int, name varchar(100), email varchar(80));";
-            Statement statement = connection.createStatement();
-            statement.executeUpdate(sql);
-            System.out.println("Tabela criada!");
+        // Cliente cliente = ClienteDAO.buscarCliente(1);
+        // System.out.println(cliente);
 
-            System.out.println("Fechando a conexão...");
-            connection.close();
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
+        boolean apagou = ClienteDAO.apagarCliente(1);
+
+        if(apagou) {
+            System.out.println("Cliente removido");
+        } else {
+            System.out.println("Falha ao remover");
         }
+
     }
 }
