@@ -1,28 +1,31 @@
 package br.facens;
 
-import java.sql.Connection;
-import java.sql.DriverManager;
+import java.util.Scanner;
+
+import br.facens.dao.AlunoDAO;
+import br.facens.models.Aluno;
 
 public class Main {
-    static final String url = "jdbc:mysql://localhost:3306/bd_poo_facens";
-    static final String user = "profFacens"; 
-    static final String password = "aula"; 
 
     public static void main(String[] args) {
-        Connection connection;
-        try {
-            System.out.println("Conectando com o BD ...");
-            connection = DriverManager.getConnection(url, user, password);
-            System.out.println("Conectado com sucesso.");
+        Scanner scanner = new Scanner(System.in);
+        String nome, email;
 
-            Thread.sleep(3000);
-            
-            System.out.println("Desconectando...");
-            connection.close();
-            System.out.println("Desconectado com sucesso.");
+        System.out.println("Informe o nomedo aluno:");
+        nome = scanner.nextLine();
+        System.out.println("informe o email do aluno:");
+        email = scanner.nextLine();
 
-        } catch (Exception e) {
-            System.out.println("Erro: " + e.getMessage());
+        Aluno aluno = new Aluno(0, nome, email);
+
+        boolean inserido = AlunoDAO.criarNovoAluno(aluno);
+
+        if(inserido) {
+            System.out.println("Aluno cadastrado com sucesso!");
+        } else {
+            System.out.println("Erro ao cadastrar o aluno");
         }
+
+        scanner.close();
     }
 }
